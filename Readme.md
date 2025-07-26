@@ -1,92 +1,86 @@
-🔐 IBM App ID SSO Login with Flask
-
+# IBM App ID SSO Login with Flask <br/>
 This project demonstrates how to integrate Single Sign-On (SSO) using IBM Cloud App ID into a Flask web application. It uses the OpenID Connect (OIDC) flow to authenticate users and fetch profile information securely.
 
-🌐 Features
+## Features <br/>
+🔑 IBM App ID-based SSO (OAuth 2.0 + OpenID Connect) <br/>
+👤 Fetches user profile using access token <br/>
+🔄 Login and Logout functionality <br/>
+📁 .env file for secure credentials <br/>
+🌟 Minimal, clean frontend using Jinja templates <br/>
 
-🔑 IBM App ID-based SSO (OAuth 2.0 + OpenID Connect)
-👤 Fetches user profile using access token
-🔄 Login and Logout functionality
-📁 .env file for secure credentials
-🌟 Minimal, clean frontend using Jinja templates
+## Project Structure  <br/>
+├── app.py               &ensp;    # Main Flask application  <br/>
+├── .env                &ensp;     # Environment variables (client ID, secret, etc.)   <br/>
+├── templates/                                                                  <br/>
+ |    &ensp; &ensp;     └── home.html       &nbsp;     # Welcome page after login                    <br/>
+├── requirements.txt     &ensp;    # Python dependencies                               <br/>
+└── README.md           &ensp;     # Project documentation                            <br/>
 
-📁 Project Structure
+## Setup Instructions <br/>
+1. 🔐 Create an IBM App ID Instance <br/>
+Go to IBM Cloud.<br/>
+Create a new App ID instance.<br/>
+Navigate to: Manage Authentication > Authentication Settings:<br/>
+Add your callback URL: http://localhost:5000/callback     <br/>
+(Optional) Enable and configure Facebook/Google login.   <br/>
 
-├── app.py                  # Main Flask application
-├── .env                    # Environment variables (client ID, secret, etc.)
-├── templates/
-│   └── home.html           # Welcome page after login
-├── requirements.txt        # Python dependencies
-└── README.md               # Project documentation
+2. 🔑 Get OIDC Configuration    <br/>
+Go to your instance’s Overview section and find:  <br/>
+Client ID<br/>
+Client Secret<br/>
+Discovery URL (looks like: https://<region>.appid.cloud.ibm.com/oauth/v4/<tenant-id>/.well-known/openid-configuration)<br/>
 
-🔧 Setup Instructions
+3. 🖥️ Clone & Run Locally<br/>
+git clone https://github.com/your-username/ibm-app-id-flask-sso.git<br/>
+cd ibm-app-id-flask-sso<br/>
 
-1. 🔐 Create an IBM App ID Instance
-Go to IBM Cloud.
-Create a new App ID instance.
-Navigate to: Manage Authentication > Authentication Settings:
-Add your callback URL: http://localhost:5000/callback
-(Optional) Enable and configure Facebook/Google login.
+4. 📦 Install Dependencies<br/>
+Make sure you have Python 3.7+ installed.<br/>
+pip install -r requirements.txt<br/>
 
-2. 🔑 Get OIDC Configuration
-Go to your instance’s Overview section and find:
-Client ID
-Client Secret
-Discovery URL (looks like: https://<region>.appid.cloud.ibm.com/oauth/v4/<tenant-id>/.well-known/openid-configuration)
+5. 🧪 Setup Environment Variables<br/>
+Create a .env file in the root directory:<br/>
+CLIENT_ID=your-client-id<br/>
+CLIENT_SECRET=your-client-secret<br/>
+REDIRECT_URI=http://localhost:5000/callback<br/>
+DISCOVERY_URL=https://<region>.appid.cloud.ibm.com/oauth/v4/<tenant-id>/.well-known/openid-configuration<br/>
 
-3. 🖥️ Clone & Run Locally
-git clone https://github.com/your-username/ibm-app-id-flask-sso.git 
-cd ibm-app-id-flask-sso
+6. ▶️ Run the Flask App<br/>
+python app.py<br/>
+Visit: http://localhost:5000<br/>
 
-4. 📦 Install Dependencies
-Make sure you have Python 3.7+ installed.
+## Code Overview
 
-pip install -r requirements.txt
+Login Flow:<br/>
+Redirects to IBM App ID login page via authorization_endpoint.<br/>
+On successful login, IBM redirects back to /callback.<br/>
+Flask exchanges the code for an access token.<br/>
+Uses token to fetch user profile from userinfo_endpoint.<br/>
 
-5. 🧪 Setup Environment Variables
-Create a .env file in the root directory:
+Templates:<br/>
+home.html displays user's name and email once logged in.<br/>
 
-CLIENT_ID=your-client-id
-CLIENT_SECRET=your-client-secret
-REDIRECT_URI=http://localhost:5000/callback
-DISCOVERY_URL=https://<region>.appid.cloud.ibm.com/oauth/v4/<tenant-id>/.well-known/openid-configuration
+## Security Notes
+Keep .env out of version control (.gitignore it).<br/>
+Never expose your CLIENT_SECRET in frontend code or public repos.<br/>
+For production, use HTTPS and set a static secret key (app.secret_key).<br/>
 
-6. ▶️ Run the Flask App
+## Deployment Options
+You can deploy this project on platforms like:<br/>
 
-python app.py
-Visit: http://localhost:5000
+Platform	Supports Python	Notes<br/>
+Render	✅	Easy setup, great for Flask apps<br/>
+Railway	✅	Fast deployment, GitHub integration<br/>
+Heroku	✅	Legacy option, still widely used<br/>
+IBM Cloud Code Engine	✅	Ideal for IBM-native deployments<br/>
+Fly.io	✅	Global app deployment with private services<br/>
 
-📄 Code Overview
+## Learn More
+📚 IBM App ID Docs<br/>
+🔒 OpenID Connect<br/>
+🐍 Flask Official Docs<br/>
 
-Login Flow:
-Redirects to IBM App ID login page via authorization_endpoint.
-On successful login, IBM redirects back to /callback.
-Flask exchanges the code for an access token.
-Uses token to fetch user profile from userinfo_endpoint.
+## Contributing
+Pull requests and feedback are welcome!<br/>
+Feel free to fork the project and submit improvements.<br/>
 
-Templates:
-home.html displays user's name and email once logged in.
-
-🔒 Security Notes
-Keep .env out of version control (.gitignore it).
-Never expose your CLIENT_SECRET in frontend code or public repos.
-For production, use HTTPS and set a static secret key (app.secret_key).
-
-🚀 Deployment Options
-You can deploy this project on platforms like:
-
-Platform	Supports Python	Notes
-Render	✅	Easy setup, great for Flask apps
-Railway	✅	Fast deployment, GitHub integration
-Heroku	✅	Legacy option, still widely used
-IBM Cloud Code Engine	✅	Ideal for IBM-native deployments
-Fly.io	✅	Global app deployment with private services
-
-🧠 Learn More
-📚 IBM App ID Docs
-🔒 OpenID Connect
-🐍 Flask Official Docs
-
-🤝 Contributing
-Pull requests and feedback are welcome!
-Feel free to fork the project and submit improvements.
